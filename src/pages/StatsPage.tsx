@@ -183,26 +183,28 @@ const StatsPage = () => {
                                                 })}`}
                                             </span>
                                         </div>
-                                        <div style={styles.sessionRight}>
-                                            <span style={styles.sessionStudy}>
-                                                순공 {formatTime(s.studySec)}
+                                        <div style={styles.sessionRightGroup}>
+                                            <div style={styles.sessionRight}>
+                                                <span style={styles.sessionStudy}>
+                                                    순공 {formatTime(s.studySec)}
+                                                </span>
+                                                {s.distractSec > 0 && (
+                                                    <span style={styles.sessionDistract}>
+                                                        딴짓 {formatTime(s.distractSec)}
+                                                    </span>
+                                                )}
+                                                {s.neutralSec > 0 && (
+                                                    <span style={styles.sessionNeutral}>
+                                                        중립 {formatTime(s.neutralSec)}
+                                                    </span>
+                                                )}
+                                            </div>
+                                            <span style={styles.expandArrow}>
+                                                {isExpanded
+                                                    ? <ChevronUp size={16} strokeWidth={1.75} />
+                                                    : <ChevronDown size={16} strokeWidth={1.75} />}
                                             </span>
-                                            {s.distractSec > 0 && (
-                                                <span style={styles.sessionDistract}>
-                                                    딴짓 {formatTime(s.distractSec)}
-                                                </span>
-                                            )}
-                                            {s.neutralSec > 0 && (
-                                                <span style={styles.sessionNeutral}>
-                                                    중립 {formatTime(s.neutralSec)}
-                                                </span>
-                                            )}
                                         </div>
-                                        <span style={styles.expandArrow}>
-                                            {isExpanded
-                                                ? <ChevronUp size={16} strokeWidth={1.75} />
-                                                : <ChevronDown size={16} strokeWidth={1.75} />}
-                                        </span>
                                     </div>
 
                                     {isExpanded && (
@@ -278,6 +280,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     sessionLeft: { display: 'flex', flexDirection: 'column', gap: '4px' },
     sessionType: { display: 'flex', alignItems: 'center', gap: '5px', fontSize: '13px', fontWeight: 600, color: color.ink },
     sessionTime: { fontSize: '12px', color: color.inkTertiary },
+    sessionRightGroup: { display: 'flex', alignItems: 'center', gap: '8px' },
     sessionRight: { display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '4px' },
     sessionStudy: { fontSize: '13px', color: color.accent, fontWeight: 700 },
     sessionDistract: { fontSize: '12px', color: color.distract },
