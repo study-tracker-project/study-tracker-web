@@ -7,6 +7,7 @@ export interface Session {
     totalSec: number;
     studySec: number;
     distractSec: number;
+    neutralSec: number;
     pauseSec: number;
     ended: boolean;
 }
@@ -14,11 +15,13 @@ export interface Session {
 export interface TodaySummary {
     totalStudySec: number;
     totalDistractSec: number;
+    totalNeutralSec: number;
     sessionCount: number;
     topDistracts: DistractItem[];
     recentNotes: LogNote[];
     studyDetails: DistractItem[];
     distractDetails: DistractItem[];
+    neutralDetails: DistractItem[];
 }
 
 export interface DistractItem {
@@ -30,6 +33,7 @@ export interface DailyStat {
     date: string;
     totalStudySec: number;
     totalDistractSec: number;
+    totalNeutralSec: number;
     sessionCount: number;
 }
 

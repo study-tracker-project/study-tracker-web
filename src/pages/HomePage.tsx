@@ -26,7 +26,7 @@ const HomePage = () => {
 
     const [showFinalizeModal, setShowFinalizeModal] = useState(false);
     const [finalizedSessionId, setFinalizedSessionId] = useState<number | null>(null);
-    const [detailModal, setDetailModal] = useState<'STUDY' | 'DISTRACT' | null>(null);
+    const [detailModal, setDetailModal] = useState<'STUDY' | 'DISTRACT' | 'NEUTRAL' | null>(null);
 
     const [summary, setSummary] = useState<TodaySummary | null>(null);
     const [showStartModal, setShowStartModal] = useState(false);
@@ -69,6 +69,13 @@ const HomePage = () => {
                                 <span style={styles.heroStatLabel}>딴짓</span>
                                 <span style={{ ...styles.heroStatValue, color: color.distract }}>
                                     {formatTime(summary?.totalDistractSec || 0)}
+                                </span>
+                            </button>
+                            <div style={styles.heroStatDivider} />
+                            <button style={styles.heroStat} onClick={() => setDetailModal('NEUTRAL')}>
+                                <span style={styles.heroStatLabel}>중립</span>
+                                <span style={{ ...styles.heroStatValue, color: color.neutral }}>
+                                    {formatTime(summary?.totalNeutralSec || 0)}
                                 </span>
                             </button>
                             <div style={styles.heroStatDivider} />
@@ -217,28 +224,32 @@ const HomePage = () => {
                     <div style={styles.modal} onClick={e => e.stopPropagation()}>
                         <div style={styles.modalHeader}>
                             <h3 style={styles.modalTitle}>
-                                {detailModal === 'STUDY' ? '공부 상세' : '딴짓 상세'}
+                                {detailModal === 'STUDY' ? '공부 상세' : detailModal === 'DISTRACT' ? '딴짓 상세' : '중립 상세'}
                             </h3>
                             <button style={styles.modalCloseIcon} onClick={() => setDetailModal(null)}>
                                 <X size={18} strokeWidth={1.75} />
                             </button>
                         </div>
-                        {(detailModal === 'STUDY' ? summary?.studyDetails : summary?.distractDetails)?.length ? (
-                            (detailModal === 'STUDY' ? summary!.studyDetails : summary!.distractDetails)
-                                .map((item, i) => (
+                        {(() => {
+                            const details = detailModal === 'STUDY' ? summary?.studyDetails
+                                : detailModal === 'DISTRACT' ? summary?.distractDetails
+                                : summary?.neutralDetails;
+                            const detailColor = detailModal === 'STUDY' ? color.accent
+                                : detailModal === 'DISTRACT' ? color.distract
+                                : color.neutral;
+                            return details?.length ? (
+                                details.map((item, i) => (
                                     <div key={i} style={styles.detailItem}>
                                         <span>{item.name}</span>
-                                        <span style={{
-                                            fontWeight: 600,
-                                            color: detailModal === 'STUDY' ? color.accent : color.distract
-                                        }}>
+                                        <span style={{ fontWeight: 600, color: detailColor }}>
                                             {formatTime(item.totalSec)}
                                         </span>
                                     </div>
                                 ))
-                        ) : (
-                            <p style={styles.empty}>기록이 없어요</p>
-                        )}
+                            ) : (
+                                <p style={styles.empty}>기록이 없어요</p>
+                            );
+                        })()}
                     </div>
                 </div>
             )}

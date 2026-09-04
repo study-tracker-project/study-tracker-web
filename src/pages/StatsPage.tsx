@@ -100,6 +100,7 @@ const StatsPage = () => {
         date: formatDate(s.date),
         순공: Math.round(s.totalStudySec / 60),
         딴짓: Math.round(s.totalDistractSec / 60),
+        중립: Math.round(s.totalNeutralSec / 60),
     }));
 
     const totalStudy = (tab === 'weekly' ? weeklyStats : monthlyStats)
@@ -150,6 +151,7 @@ const StatsPage = () => {
                                 <Legend />
                                 <Bar dataKey="순공" fill={color.accent} radius={[4, 4, 0, 0]} />
                                 <Bar dataKey="딴짓" fill={color.distract} radius={[4, 4, 0, 0]} />
+                                <Bar dataKey="중립" fill={color.neutral} radius={[4, 4, 0, 0]} />
                             </BarChart>
                         </ResponsiveContainer>
                     </div>
@@ -187,6 +189,11 @@ const StatsPage = () => {
                                             {s.distractSec > 0 && (
                                                 <span style={styles.sessionDistract}>
                                                     딴짓 {formatTime(s.distractSec)}
+                                                </span>
+                                            )}
+                                            {s.neutralSec > 0 && (
+                                                <span style={styles.sessionNeutral}>
+                                                    중립 {formatTime(s.neutralSec)}
                                                 </span>
                                             )}
                                         </div>
@@ -273,6 +280,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     sessionRight: { display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '4px' },
     sessionStudy: { fontSize: '13px', color: color.accent, fontWeight: 700 },
     sessionDistract: { fontSize: '12px', color: color.distract },
+    sessionNeutral: { fontSize: '12px', color: color.neutral },
     expandArrow: { display: 'flex', color: color.inkTertiary },
     noteList: { marginTop: '10px', paddingTop: '10px', borderTop: `1px solid ${color.surfaceMuted}`, cursor: 'default' },
     noteRow: { padding: '6px 0', fontSize: '13px' },
