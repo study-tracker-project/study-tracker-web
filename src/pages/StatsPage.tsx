@@ -7,6 +7,7 @@ import { getWeeklyStats, getMonthlyStats, getSessions } from '../api/stats';
 import { getSessionNotes } from '../api/session';
 import { DailyStat, Session, LogNote } from '../types';
 import { parseServerDateTime } from '../utils/date';
+import { displayLabel } from '../utils/appLabel';
 import HistoryTab from '../components/HistoryTab';
 import AppShell from '../components/AppShell';
 import { color, radius } from '../theme';
@@ -217,7 +218,7 @@ const StatsPage = () => {
                                                             {note.logType === 'APP'
                                                                 ? <Monitor size={13} strokeWidth={1.75} color={color.inkTertiary} />
                                                                 : <Globe size={13} strokeWidth={1.75} color={color.inkTertiary} />}
-                                                            {note.logValue}
+                                                            {displayLabel(note.logValue)}
                                                             <span style={{
                                                                 fontSize: '11px', fontWeight: 600,
                                                                 color: note.category === 'STUDY' ? color.accent

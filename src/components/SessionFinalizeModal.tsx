@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { LogSummaryItem, LogNoteItem } from '../types';
 import { getLogSummary, finalizeSession } from '../api/session';
 import { color, radius, shadow } from '../theme';
+import { displayLabel } from '../utils/appLabel';
 import { Monitor, Globe, X } from 'lucide-react';
 
 interface Props {
@@ -132,7 +133,7 @@ const SessionFinalizeModal = ({ sessionId, onComplete, onCancel }: Props) => {
                                         ? <Monitor size={15} strokeWidth={1.75} color={color.inkTertiary} />
                                         : <Globe size={15} strokeWidth={1.75} color={color.inkTertiary} />}
                                 </span>
-                                <span style={styles.itemValue}>{item.logValue}</span>
+                                <span style={styles.itemValue}>{displayLabel(item.logValue)}</span>
                                 <span style={styles.itemTime}>{formatTime(item.totalSec)}</span>
                             </div>
 

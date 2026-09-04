@@ -3,6 +3,7 @@ import { getCalendar, getSessions, getWeeklyNotes, getMonthlyNotes } from '../ap
 import { getSessionNotes } from '../api/session';
 import { CalendarData, Session, LogNote, NoteDailySummary } from '../types';
 import { color, radius } from '../theme';
+import { displayLabel } from '../utils/appLabel';
 import { ChevronLeft, ChevronRight, Monitor, Globe } from 'lucide-react';
 
 const formatTime = (sec: number): string => {
@@ -205,7 +206,7 @@ const HistoryTab = () => {
                                             {note.logType === 'APP'
                                                 ? <Monitor size={13} strokeWidth={1.75} color={color.inkTertiary} />
                                                 : <Globe size={13} strokeWidth={1.75} color={color.inkTertiary} />}
-                                            {note.logValue}
+                                            {displayLabel(note.logValue)}
                                             <span style={{
                                                 fontSize: '11px', fontWeight: 600,
                                                 color: note.category === 'STUDY' ? color.accent
@@ -253,7 +254,7 @@ const HistoryTab = () => {
                                 <div key={j}>
                                     {sg.notes.map((note, k) => (
                                         <div key={k} style={styles.noteRow}>
-                                            <span>{note.logValue}</span>
+                                            <span>{displayLabel(note.logValue)}</span>
                                             {note.memo && <p style={styles.noteMemo}>"{note.memo}"</p>}
                                         </div>
                                     ))}
