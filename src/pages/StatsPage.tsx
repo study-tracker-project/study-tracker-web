@@ -6,7 +6,7 @@ import {
 import { getWeeklyStats, getMonthlyStats, getSessions } from '../api/stats';
 import { getSessionNotes } from '../api/session';
 import { DailyStat, Session, LogNote } from '../types';
-import { parseServerDateTime } from '../utils/date';
+import { parseServerDateTime, toLocalDateStr } from '../utils/date';
 import { displayLabel } from '../utils/appLabel';
 import HistoryTab from '../components/HistoryTab';
 import AppShell from '../components/AppShell';
@@ -47,7 +47,7 @@ const StatsPage = () => {
             const diffToMonday = day === 0 ? -6 : 1 - day; // 일요일이면 6일 전 월요일
             const monday = new Date(today);
             monday.setDate(today.getDate() + diffToMonday);
-            const startDate = monday.toISOString().slice(0, 10);
+            const startDate = toLocalDateStr(monday);
             const data = await getWeeklyStats(startDate);
             setWeeklyStats(data);
         } catch (e) {
@@ -69,7 +69,7 @@ const StatsPage = () => {
 
     const fetchTodaySessions = async () => {
         try {
-            const today = new Date().toISOString().slice(0, 10);
+            const today = toLocalDateStr(new Date());
             const data = await getSessions(today);
             setTodaySessions(data);
         } catch (e) {

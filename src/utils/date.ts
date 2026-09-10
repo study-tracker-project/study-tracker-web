@@ -1,7 +1,14 @@
-const HAS_TIMEZONE = /Z$|[+-]\d{2}:\d{2}$/;
-
-// 백엔드가 LocalDateTime.now()(서버가 UTC라 UTC 시각)를 타임존 표시 없이 내려주므로,
-// 명시적 오프셋이 없으면 UTC로 간주해서 파싱한다.
+// 백엔드가 Asia/Seoul 타임존으로 동작하므로 LocalDateTime 값은 이미 KST다.
+// 타임존 표시가 없으면 로컬(= 사용자 브라우저 = KST)로 그대로 파싱한다.
 export const parseServerDateTime = (dateTimeStr: string): Date => {
-    return new Date(HAS_TIMEZONE.test(dateTimeStr) ? dateTimeStr : `${dateTimeStr}Z`);
+    return new Date(dateTimeStr);
+};
+
+// 통계 API에 넘길 날짜 파라미터. toISOString()은 UTC 날짜라 자정 부근에 하루가
+// 어긋나므로, 로컬 기준 YYYY-MM-DD로 만든다.
+export const toLocalDateStr = (d: Date): string => {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
 };
