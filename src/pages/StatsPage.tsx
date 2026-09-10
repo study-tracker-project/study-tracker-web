@@ -220,7 +220,7 @@ const StatsPage = () => {
                                                             {note.logType === 'APP'
                                                                 ? <Monitor size={13} strokeWidth={1.75} color={color.inkTertiary} />
                                                                 : <Globe size={13} strokeWidth={1.75} color={color.inkTertiary} />}
-                                                            {displayLabel(note.logValue)}
+                                                            {displayLabel(note.logValue, note.displayName)}
                                                             <span style={{
                                                                 fontSize: '11px', fontWeight: 600,
                                                                 color: note.category === 'STUDY' ? color.accent

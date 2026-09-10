@@ -133,7 +133,7 @@ const SessionFinalizeModal = ({ sessionId, onComplete, onCancel }: Props) => {
                                         ? <Monitor size={15} strokeWidth={1.75} color={color.inkTertiary} />
                                         : <Globe size={15} strokeWidth={1.75} color={color.inkTertiary} />}
                                 </span>
-                                <span style={styles.itemValue}>{displayLabel(item.logValue)}</span>
+                                <span style={styles.itemValue}>{displayLabel(item.logValue, item.displayName)}</span>
                                 <span style={styles.itemTime}>{formatTime(item.totalSec)}</span>
                             </div>
 

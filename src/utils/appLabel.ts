@@ -30,5 +30,7 @@ const APP_LABELS: Record<string, string> = {
     'zoom.exe': 'Zoom',
 };
 
-// 실행 파일명(예: WindowsTerminal.exe) 대신 사람이 알아볼 수 있는 이름으로. 목록에 없으면 원본 그대로.
-export const displayLabel = (value: string): string => APP_LABELS[value.toLowerCase()] ?? value;
+// 실행 파일명(예: WindowsTerminal.exe) 대신 사람이 알아볼 수 있는 이름으로.
+// 서버가 내려준 이름(serverName)이 있으면 그걸 우선, 없으면 로컬 목록, 그것도 없으면 원본.
+export const displayLabel = (value: string, serverName?: string): string =>
+    serverName || APP_LABELS[value.toLowerCase()] || value;

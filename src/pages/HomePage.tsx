@@ -132,7 +132,7 @@ const HomePage = () => {
                             <p style={styles.panelTitle}>오늘 딴짓 TOP</p>
                             {summary.topDistracts.map((item, i) => (
                                 <div key={i} style={styles.distractItem}>
-                                    <span style={styles.distractName}>{displayLabel(item.name)}</span>
+                                    <span style={styles.distractName}>{displayLabel(item.name, item.displayName)}</span>
                                     <span style={{ color: color.distract, fontWeight: 600, fontSize: '13px' }}>
                                         {formatTime(item.totalSec)}
                                     </span>
@@ -154,7 +154,7 @@ const HomePage = () => {
                                             : <Globe size={15} strokeWidth={1.75} color={color.inkTertiary} />}
                                     </span>
                                     <div style={styles.recentTextWrap}>
-                                        <span style={styles.recentValue}>{displayLabel(note.logValue)}</span>
+                                        <span style={styles.recentValue}>{displayLabel(note.logValue, note.displayName)}</span>
                                         <span style={styles.recentMemo}>{note.memo}</span>
                                     </div>
                                 </div>
@@ -241,7 +241,7 @@ const HomePage = () => {
                             return details?.length ? (
                                 details.map((item, i) => (
                                     <div key={i} style={styles.detailItem}>
-                                        <span>{displayLabel(item.name)}</span>
+                                        <span>{displayLabel(item.name, item.displayName)}</span>
                                         <span style={{ fontWeight: 600, color: detailColor }}>
                                             {formatTime(item.totalSec)}
                                         </span>

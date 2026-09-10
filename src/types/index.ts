@@ -26,6 +26,7 @@ export interface TodaySummary {
 
 export interface DistractItem {
     name: string;
+    displayName?: string;
     totalSec: number;
 }
 
@@ -59,6 +60,7 @@ export interface UserMe {
 export interface LogSummaryItem {
     logType: string;    // APP / DOMAIN
     logValue: string;   // idea64.exe / youtube.com
+    displayName?: string;
     totalSec: number;
     category: string;   // 자동 분류 기본값
 }
@@ -74,6 +76,7 @@ export interface LogNote {
     id: number;
     logType: string;
     logValue: string;
+    displayName?: string;
     category: string;
     memo: string | null;
 }
