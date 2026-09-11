@@ -3,8 +3,8 @@ import AppShell from '../components/AppShell';
 
 const AGENT_RELEASE_URL =
     'https://github.com/study-tracker-project/study-tracker-agent/releases/latest/download/study-tracker-agent.exe';
-const EXTENSION_ZIP_URL =
-    'https://github.com/study-tracker-project/study-tracker-extension/archive/refs/heads/main.zip';
+const EXTENSION_STORE_URL =
+    'https://chromewebstore.google.com/detail/study-tracker/ggmeldiabekaddjjbcfacgghfpcjcolk';
 
 const OnboardingPage = () => {
     return (
@@ -22,29 +22,16 @@ const OnboardingPage = () => {
             <div style={styles.card}>
                 <div style={styles.stepTitle}><span style={styles.stepNum}>1</span>Chrome 확장 프로그램 설치</div>
 
-                <div style={styles.subStep}>
-                    <div style={styles.subStepTitle}>① 확장 프로그램 파일 내려받기</div>
-                    <p style={styles.text}>
-                        아래 링크에서 소스 코드 ZIP을 내려받아 원하는 위치(예: 문서 폴더)에 압축을 풀어요.
-                        이 폴더는 나중에 확장 프로그램을 업데이트할 때도 계속 쓰이니 지우지 마세요.
-                    </p>
-                    <a href={EXTENSION_ZIP_URL} style={styles.linkBtn}>study-tracker-extension.zip 다운로드</a>
-                </div>
-
-                <div style={styles.subStep}>
-                    <div style={styles.subStepTitle}>② Chrome에 로드하기</div>
-                    <ol style={styles.list}>
-                        <li>Chrome 주소창에 <code style={styles.code}>chrome://extensions</code> 입력 후 이동</li>
-                        <li>오른쪽 위 <b>개발자 모드</b> 토글을 켜기</li>
-                        <li>왼쪽 위 <b>압축해제된 확장 프로그램을 로드합니다</b> 클릭</li>
-                        <li>방금 압축을 푼 <code style={styles.code}>study-tracker-extension-main</code> 폴더를 선택</li>
-                        <li>확장 프로그램 목록에 "Study Tracker"가 나타나면 성공. 주소창 오른쪽 퍼즐 아이콘을 눌러 고정해두면 편해요.</li>
-                    </ol>
-                </div>
-
+                <p style={styles.text}>
+                    Chrome 웹 스토어에 정식으로 올라가 있어서, 아래 링크에서 <b>Chrome에 추가</b> 버튼만 누르면 끝이에요.
+                </p>
+                <a href={EXTENSION_STORE_URL} style={styles.linkBtn}>Chrome 웹 스토어에서 설치</a>
+                <p style={styles.text}>
+                    설치 후 주소창 오른쪽 퍼즐 아이콘을 눌러 Study Tracker를 고정해두면 상태를 바로 확인할 수 있어 편해요.
+                </p>
                 <div style={styles.note}>
-                    브라우저를 업데이트해도 확장 프로그램은 그대로 있지만, Chrome이 가끔 "개발자 모드 확장 프로그램"
-                    경고를 보여줄 수 있어요. 무시하고 계속 사용하면 됩니다.
+                    확장 프로그램은 studytracker.cloud에 로그인되어 있으면 자동으로 로그인 상태를 넘겨받아요.
+                    따로 로그인할 필요는 없어요.
                 </div>
             </div>
 
