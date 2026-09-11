@@ -4,6 +4,7 @@ import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import StatsPage from './pages/StatsPage';
 import ClassificationPage from './pages/ClassificationPage';
+import OnboardingPage from './pages/OnboardingPage';
 import PrivacyPage from './pages/PrivacyPage';
 import TermsPage from './pages/TermsPage';
 import { notifyExtensionOfLogin } from './utils/extensionBridge';
@@ -42,6 +43,11 @@ function App() {
                 <Route path="/classifications" element={
                     <PrivateRoute>
                         <ClassificationPage />
+                    </PrivateRoute>
+                } />
+                <Route path="/setup" element={
+                    <PrivateRoute>
+                        <OnboardingPage />
                     </PrivateRoute>
                 } />
             </Routes>

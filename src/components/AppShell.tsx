@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Home, BarChart2, SlidersHorizontal, LogOut, BookOpen } from 'lucide-react';
+import { Home, BarChart2, SlidersHorizontal, LogOut, BookOpen, Download } from 'lucide-react';
 import { color } from '../theme';
 
 interface Props {
@@ -10,6 +10,7 @@ interface Props {
 const NAV_ITEMS = [
     { path: '/', label: '홈', icon: Home },
     { path: '/stats', label: '통계', icon: BarChart2 },
+    { path: '/setup', label: '설치 가이드', icon: Download },
     { path: '/classifications', label: '설정', icon: SlidersHorizontal },
 ];
 
