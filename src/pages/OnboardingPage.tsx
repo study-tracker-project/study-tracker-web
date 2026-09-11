@@ -172,6 +172,7 @@ const styles: { [key: string]: React.CSSProperties } = {
         background: color.ink, color: '#F6F4EF', borderRadius: radius.sm,
         padding: '10px 14px', fontSize: '13px', margin: '6px 0 10px',
         fontFamily: 'ui-monospace, Consolas, monospace', overflowX: 'auto',
+        whiteSpace: 'pre-line',
     },
     linkBtn: {
         display: 'inline-block', padding: '9px 16px', background: color.ink, color: color.surface,
