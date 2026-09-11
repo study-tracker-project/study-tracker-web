@@ -6,6 +6,7 @@ import SessionFinalizeModal from '../components/SessionFinalizeModal';
 import AppShell from '../components/AppShell';
 import { color, radius, shadow } from '../theme';
 import { displayLabel } from '../utils/appLabel';
+import { formatContentDuration } from '../utils/duration';
 import {
     Play, Pause, Plus, Square, Monitor, Globe, StickyNote, X, ChevronRight,
 } from 'lucide-react';
@@ -134,7 +135,7 @@ const HomePage = () => {
                                 <div key={i} style={styles.distractItem}>
                                     <span style={styles.distractName}>{displayLabel(item.name, item.displayName)}</span>
                                     <span style={{ color: color.distract, fontWeight: 600, fontSize: '13px' }}>
-                                        {formatTime(item.totalSec)}
+                                        {formatContentDuration(item.totalSec)}
                                     </span>
                                 </div>
                             ))}
@@ -243,7 +244,7 @@ const HomePage = () => {
                                     <div key={i} style={styles.detailItem}>
                                         <span>{displayLabel(item.name, item.displayName)}</span>
                                         <span style={{ fontWeight: 600, color: detailColor }}>
-                                            {formatTime(item.totalSec)}
+                                            {formatContentDuration(item.totalSec)}
                                         </span>
                                     </div>
                                 ))

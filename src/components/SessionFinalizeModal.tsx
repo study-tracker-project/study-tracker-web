@@ -3,6 +3,7 @@ import { LogSummaryItem, LogNoteItem } from '../types';
 import { getLogSummary, finalizeSession } from '../api/session';
 import { color, radius, shadow } from '../theme';
 import { displayLabel } from '../utils/appLabel';
+import { formatContentDuration } from '../utils/duration';
 import { Monitor, Globe, X } from 'lucide-react';
 
 interface Props {
@@ -10,13 +11,6 @@ interface Props {
     onComplete: () => void;
     onCancel: () => void;
 }
-
-const formatTime = (sec: number): string => {
-    const m = Math.floor(sec / 60);
-    const s = sec % 60;
-    if (m > 0) return `${m}분 ${s}초`;
-    return `${s}초`;
-};
 
 const categoryLabel: { [key: string]: string } = {
     STUDY: '공부',
@@ -134,7 +128,7 @@ const SessionFinalizeModal = ({ sessionId, onComplete, onCancel }: Props) => {
                                         : <Globe size={15} strokeWidth={1.75} color={color.inkTertiary} />}
                                 </span>
                                 <span style={styles.itemValue}>{displayLabel(item.logValue, item.displayName)}</span>
-                                <span style={styles.itemTime}>{formatTime(item.totalSec)}</span>
+                                <span style={styles.itemTime}>{formatContentDuration(item.totalSec)}</span>
                             </div>
 
                             <div style={styles.categoryRow}>
