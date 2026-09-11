@@ -8,6 +8,7 @@ import { getSessionNotes } from '../api/session';
 import { DailyStat, Session, LogNote } from '../types';
 import { parseServerDateTime, toLocalDateStr } from '../utils/date';
 import { displayLabel } from '../utils/appLabel';
+import { formatContentDuration } from '../utils/duration';
 import HistoryTab from '../components/HistoryTab';
 import AppShell from '../components/AppShell';
 import { color, radius } from '../theme';
@@ -255,12 +256,17 @@ const StatsPage = () => {
                                                             </button>
                                                             {catOpen && notes.map((note, j) => (
                                                                 <div key={j} style={styles.noteRow}>
-                                                                    <span style={styles.noteRowLine}>
-                                                                        {note.logType === 'APP'
-                                                                            ? <Monitor size={13} strokeWidth={1.75} color={color.inkTertiary} />
-                                                                            : <Globe size={13} strokeWidth={1.75} color={color.inkTertiary} />}
-                                                                        {displayLabel(note.logValue, note.displayName)}
-                                                                    </span>
+                                                                    <div style={styles.noteRowTop}>
+                                                                        <span style={styles.noteRowLine}>
+                                                                            {note.logType === 'APP'
+                                                                                ? <Monitor size={13} strokeWidth={1.75} color={color.inkTertiary} />
+                                                                                : <Globe size={13} strokeWidth={1.75} color={color.inkTertiary} />}
+                                                                            {displayLabel(note.logValue, note.displayName)}
+                                                                        </span>
+                                                                        <span style={styles.noteRowTime}>
+                                                                            {formatContentDuration(note.totalSec)}
+                                                                        </span>
+                                                                    </div>
                                                                     {note.memo && <p style={styles.noteMemo}>"{note.memo}"</p>}
                                                                 </div>
                                                             ))}
@@ -327,7 +333,9 @@ const styles: { [key: string]: React.CSSProperties } = {
         padding: '8px 4px', background: 'none', border: 'none', cursor: 'pointer', fontSize: '13px',
     },
     noteRow: { padding: '6px 0 6px 4px', fontSize: '13px' },
+    noteRowTop: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px' },
     noteRowLine: { display: 'flex', alignItems: 'center', gap: '6px', color: color.ink },
+    noteRowTime: { fontSize: '12px', color: color.inkTertiary, flexShrink: 0 },
     noteMemo: { margin: '4px 0 0 19px', fontSize: '12px', color: color.inkTertiary },
 };
 

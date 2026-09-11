@@ -79,6 +79,7 @@ export interface LogNote {
     displayName?: string;
     category: string;
     memo: string | null;
+    totalSec: number;
 }
 
 // 달력용 월별 순공 시간: { "2026-07-15": 21600, ... }
