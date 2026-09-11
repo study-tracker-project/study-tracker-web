@@ -68,24 +68,7 @@ const OnboardingPage = () => {
                 </div>
 
                 <div style={styles.subStep}>
-                    <div style={styles.subStepTitle}>② Google 로그인용 환경변수 설정 (최초 1회)</div>
-                    <p style={styles.text}>
-                        에이전트는 Google 로그인을 위해 <code style={styles.code}>GOOGLE_OAUTH_CLIENT_ID</code>와{' '}
-                        <code style={styles.code}>GOOGLE_OAUTH_CLIENT_SECRET</code> 두 값을 환경변수로 필요로 해요.
-                        (study-tracker-backend/web 설정할 때 발급받은 Google OAuth 클라이언트와 같은 값.) PowerShell에서
-                        한 번만 등록해두면 재부팅해도 유지돼요.
-                    </p>
-                    <div style={styles.codeBlock}>
-                        setx GOOGLE_OAUTH_CLIENT_ID "여기에 클라이언트 ID"{'\n'}
-                        setx GOOGLE_OAUTH_CLIENT_SECRET "여기에 클라이언트 시크릿"
-                    </div>
-                    <p style={styles.text}>
-                        실행한 뒤에는 <b>열려있던 명령 프롬프트를 닫고 새로 열어야</b> 값이 반영돼요.
-                    </p>
-                </div>
-
-                <div style={styles.subStep}>
-                    <div style={styles.subStepTitle}>③ 로그인 (최초 1회)</div>
+                    <div style={styles.subStepTitle}>② 로그인 (최초 1회)</div>
                     <p style={styles.text}>
                         에이전트는 콘솔 창 없이 조용히 동작하도록 만들어져서, <b>아이콘을 더블클릭해도 아무 반응이
                         없어요</b>. 반드시 명령 프롬프트(PowerShell)에서 실행해야 해요.
@@ -102,7 +85,7 @@ const OnboardingPage = () => {
                 </div>
 
                 <div style={styles.subStep}>
-                    <div style={styles.subStepTitle}>④ 상주 모드로 실행</div>
+                    <div style={styles.subStepTitle}>③ 상주 모드로 실행</div>
                     <p style={styles.text}>
                         로그인이 끝나면 트레이 모드로 실행해서 백그라운드에 상주시켜요. 같은 명령 프롬프트에서:
                     </p>
