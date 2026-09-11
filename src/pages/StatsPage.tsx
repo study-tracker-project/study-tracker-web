@@ -25,6 +25,18 @@ const formatDate = (dateStr: string): string => {
     return `${d.getMonth() + 1}/${d.getDate()}`;
 };
 
+const CATEGORY_META: { key: 'STUDY' | 'DISTRACT' | 'NEUTRAL'; label: string; color: string }[] = [
+    { key: 'STUDY', label: '공부', color: color.accent },
+    { key: 'DISTRACT', label: '딴짓', color: color.distract },
+    { key: 'NEUTRAL', label: '중립', color: color.neutral },
+];
+
+const groupByCategory = (notes: LogNote[]) => {
+    const groups: { [key: string]: LogNote[] } = { STUDY: [], DISTRACT: [], NEUTRAL: [] };
+    notes.forEach(n => { (groups[n.category] || groups.NEUTRAL).push(n); });
+    return groups;
+};
+
 const StatsPage = () => {
     const [tab, setTab] = useState<'weekly' | 'monthly' | 'history'>('weekly');
     const [weeklyStats, setWeeklyStats] = useState<DailyStat[]>([]);
@@ -33,6 +45,15 @@ const StatsPage = () => {
     const [expandedSessionId, setExpandedSessionId] = useState<number | null>(null);
     const [sessionNotes, setSessionNotes] = useState<{ [sessionId: number]: LogNote[] }>({});
     const [notesLoading, setNotesLoading] = useState(false);
+    const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set());
+
+    const toggleCategory = (key: string) => {
+        setExpandedCategories(prev => {
+            const next = new Set(prev);
+            next.has(key) ? next.delete(key) : next.add(key);
+            return next;
+        });
+    };
 
     useEffect(() => {
         fetchWeekly();
@@ -213,27 +234,40 @@ const StatsPage = () => {
                                                 <p style={styles.empty}>불러오는 중...</p>
                                             ) : (sessionNotes[s.sessionId] || []).length === 0 ? (
                                                 <p style={styles.empty}>기록된 노트가 없어요</p>
-                                            ) : (
-                                                sessionNotes[s.sessionId].map((note, j) => (
-                                                    <div key={j} style={styles.noteRow}>
-                                                        <span style={styles.noteRowLine}>
-                                                            {note.logType === 'APP'
-                                                                ? <Monitor size={13} strokeWidth={1.75} color={color.inkTertiary} />
-                                                                : <Globe size={13} strokeWidth={1.75} color={color.inkTertiary} />}
-                                                            {displayLabel(note.logValue, note.displayName)}
-                                                            <span style={{
-                                                                fontSize: '11px', fontWeight: 600,
-                                                                color: note.category === 'STUDY' ? color.accent
-                                                                    : note.category === 'DISTRACT' ? color.distract : color.neutral
-                                                            }}>
-                                                                {note.category === 'STUDY' ? '공부'
-                                                                    : note.category === 'DISTRACT' ? '딴짓' : '중립'}
-                                                            </span>
-                                                        </span>
-                                                        {note.memo && <p style={styles.noteMemo}>"{note.memo}"</p>}
-                                                    </div>
-                                                ))
-                                            )}
+                                            ) : (() => {
+                                                const groups = groupByCategory(sessionNotes[s.sessionId]);
+                                                return CATEGORY_META.map(({ key, label, color: catColor }) => {
+                                                    const notes = groups[key];
+                                                    if (notes.length === 0) return null;
+                                                    const catKey = `${s.sessionId}:${key}`;
+                                                    const catOpen = expandedCategories.has(catKey);
+                                                    return (
+                                                        <div key={key} style={styles.categoryGroup}>
+                                                            <button
+                                                                style={styles.categoryHeader}
+                                                                onClick={() => toggleCategory(catKey)}>
+                                                                <span style={{ color: catColor, fontWeight: 700 }}>
+                                                                    {label} {notes.length}개
+                                                                </span>
+                                                                {catOpen
+                                                                    ? <ChevronUp size={14} strokeWidth={1.75} color={color.inkTertiary} />
+                                                                    : <ChevronDown size={14} strokeWidth={1.75} color={color.inkTertiary} />}
+                                                            </button>
+                                                            {catOpen && notes.map((note, j) => (
+                                                                <div key={j} style={styles.noteRow}>
+                                                                    <span style={styles.noteRowLine}>
+                                                                        {note.logType === 'APP'
+                                                                            ? <Monitor size={13} strokeWidth={1.75} color={color.inkTertiary} />
+                                                                            : <Globe size={13} strokeWidth={1.75} color={color.inkTertiary} />}
+                                                                        {displayLabel(note.logValue, note.displayName)}
+                                                                    </span>
+                                                                    {note.memo && <p style={styles.noteMemo}>"{note.memo}"</p>}
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    );
+                                                });
+                                            })()}
                                         </div>
                                     )}
                                 </div>
@@ -287,9 +321,14 @@ const styles: { [key: string]: React.CSSProperties } = {
     sessionNeutral: { fontSize: '12px', color: color.neutral },
     expandArrow: { display: 'flex', color: color.inkTertiary },
     noteList: { marginTop: '10px', paddingTop: '10px', borderTop: `1px solid ${color.surfaceMuted}`, cursor: 'default' },
-    noteRow: { padding: '6px 0', fontSize: '13px' },
+    categoryGroup: { marginBottom: '4px' },
+    categoryHeader: {
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%',
+        padding: '8px 4px', background: 'none', border: 'none', cursor: 'pointer', fontSize: '13px',
+    },
+    noteRow: { padding: '6px 0 6px 4px', fontSize: '13px' },
     noteRowLine: { display: 'flex', alignItems: 'center', gap: '6px', color: color.ink },
-    noteMemo: { margin: '4px 0 0', fontSize: '12px', color: color.inkTertiary },
+    noteMemo: { margin: '4px 0 0 19px', fontSize: '12px', color: color.inkTertiary },
 };
 
 export default StatsPage;
